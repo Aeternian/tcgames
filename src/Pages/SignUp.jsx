@@ -3,6 +3,13 @@ import signin from '../images/signin.jpg';
 import { AiFillEyeInvisible,AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import { getAuth,createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { db } from '../firebase';
+import { doc, serverTimestamp,setDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+
 export default function SignUp() {
   const [showPassword,setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,10 +18,34 @@ export default function SignUp() {
     telefono:"",
     email: "",
     password: "",
-    estado:"",
+
   });
-  const {nombre, apellido, telefono, email, password, estado} = formData;
+  const {nombre, apellido, telefono, email, password} = formData;
+  const navigate = useNavigate()
   function onChange(e) { const { id, value } = e.target; if (id === "telefono") {const re = /^\d*$/; if (re.test(value)) { setFormData((prevState) => ({ ...prevState, [id]: value, })); } } else { setFormData((prevState) => ({ ...prevState, [id]: value, })); }}
+  async function onSubmit(e){
+    e.preventDefault()
+
+try {
+  const auth = getAuth()
+  const userCredential = await createUserWithEmailAndPassword(auth, email,password);
+  updateProfile(auth.currentUser,{
+    displayName: `${nombre} ${apellido}`,
+  })
+  const user = userCredential.user;
+  const formDataCopy = {...formData}
+  delete formDataCopy.password
+  formDataCopy.timestamp = serverTimestamp();
+
+  await setDoc(doc(db,"users",user.uid),formDataCopy)
+  //toast.success("Registro exitoso!")
+  navigate('/');
+
+} catch (error) {
+  toast.error("Algo no funcionó bien con el registro.")
+}
+
+  }
   return (
     <section>
       <h1 className="text-3xl text-center mt-6 font-bold">Registrarse</h1>
@@ -27,7 +58,7 @@ export default function SignUp() {
             />
         </div>
         <div className="w-full md:w-[40%] lg:w-[30%] lg:ml-20">
-          <form> 
+          <form onSubmit={onSubmit}> 
           <input type="text" id="nombre"
             value={nombre}
             onChange={onChange}
