@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import signin from '../images/signin.jpg'; 
+import signup from '../images/signup.jpg'; 
 import { AiFillEyeInvisible,AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
@@ -21,28 +21,28 @@ export default function SignUp() {
 
   });
   const {nombre, apellido, telefono, email, password} = formData;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function onChange(e) { const { id, value } = e.target; if (id === "telefono") {const re = /^\d*$/; if (re.test(value)) { setFormData((prevState) => ({ ...prevState, [id]: value, })); } } else { setFormData((prevState) => ({ ...prevState, [id]: value, })); }}
   async function onSubmit(e){
-    e.preventDefault()
+    e.preventDefault();
 
 try {
   const auth = getAuth()
   const userCredential = await createUserWithEmailAndPassword(auth, email,password);
   updateProfile(auth.currentUser,{
     displayName: `${nombre} ${apellido}`,
-  })
+  });
   const user = userCredential.user;
-  const formDataCopy = {...formData}
-  delete formDataCopy.password
+  const formDataCopy = {...formData};
+  delete formDataCopy.password;
   formDataCopy.timestamp = serverTimestamp();
 
-  await setDoc(doc(db,"users",user.uid),formDataCopy)
+  await setDoc(doc(db,"users",user.uid),formDataCopy);
   //toast.success("Registro exitoso!")
   navigate('/');
 
 } catch (error) {
-  toast.error("Algo no funcionó bien con el registro.")
+  toast.error("Algo no funcionó bien con el registro.");
 }
 
   }
@@ -52,8 +52,8 @@ try {
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[40%] lg:w-[35%] mb-12 md:mb-6">
         <img 
-              src={signin} 
-              alt="Logo de Signin"  
+              src={signup} 
+              alt="Logo de Signup"  
               className="w-full rounded-2xl"
             />
         </div>
