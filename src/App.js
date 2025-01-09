@@ -6,6 +6,7 @@ import SignUp from "./Pages/SignUp";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Juegos from "./Pages/Juegos";
 import Header from "./components/Header";
+import JuegoInfo from "./Pages/JuegoInfo";
 import { ToastContainer, toast } from "react-toastify";
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/sign-Up" element={<SignUp/>} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/juegos" element={<Juegos/>} />
+          <Route path="/JuegoInfo/:id" element={<JuegoInfo/>} />
          
 
         </Routes>

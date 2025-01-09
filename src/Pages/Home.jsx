@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom'; // Aquí solo importamos Routes y Route, sin BrowserRouter
 import SearchBar from '../components/SearchBar';
 import ImageCarousel from '../components/ImageCarousel';
 import GameGrid from '../components/GameGrid';
@@ -10,7 +11,7 @@ export default function Home() {
   const [games, setGames] = useState([]);
   const [filteredGames, setFilteredGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const gamesPerPage = 12;
+  const gamesPerPage = 15;
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -36,6 +37,9 @@ export default function Home() {
     <div>
       <SearchBar setFilteredGames={setFilteredGames} games={games} />
       <ImageCarousel games={lastFiveGames} />
+      <h2 className="text-4xl font-extrabold text-white bg-gradient-to-r from-amber-800 via-orange-800 to-yellow-600 px-6 py-4 rounded-lg shadow-lg uppercase tracking-wide text-center hover:scale-105 transition-transform duration-300">
+  🎲 Todos los Juegos Disponibles 🎲
+</h2>
       <GameGrid games={currentGames} />
       <Paginator 
         totalGames={filteredGames.length} 
