@@ -4,6 +4,7 @@ import SearchBar from '../components/SearchBar';
 import ImageCarousel from '../components/ImageCarousel';
 import GameGrid from '../components/GameGrid';
 import Paginator from '../components/Paginator';
+import Footer from '../components/Footer'; 
 import { db } from '../firebase';
 import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 
@@ -47,6 +48,8 @@ export default function Home() {
         currentPage={currentPage} 
         setCurrentPage={setCurrentPage} 
       />
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

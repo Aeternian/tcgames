@@ -5,6 +5,8 @@ import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Juegos from "./Pages/Juegos";
+import About from "./Pages/About";
+import Terms from "./Pages/Terms";
 import Header from "./components/Header";
 import JuegoInfo from "./Pages/JuegoInfo";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,7 +25,9 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/juegos" element={<Juegos/>} />
           <Route path="/JuegoInfo/:id" element={<JuegoInfo/>} />
-         
+          <Route path="/about" element={<About />} /> {/* Asegura que la ruta esté en minúsculas */}
+          <Route path="/terminos" element={<Terms />} /> 
+     
 
         </Routes>
 
